@@ -4,6 +4,6 @@ Project-GIF allows you to use any of your favourite gifs within your favourite a
 
 
 
-This is a very stage of development of the project. Come back later for more cool stuff
+This is a very early stage of development of the project. Come back later for more cool stuff
 
 ![alt tag](https://raw.githubusercontent.com/alexstyl/project-gif/master/art/adventure_time_dance_party.gif)
