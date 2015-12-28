@@ -11,6 +11,9 @@ import com.alexstyl.gif.R;
 
 public class OverlayManager {
 
+    private final WindowManager windowManager;
+    private final View overlayView;
+
     public static OverlayManager newInstance(Context context) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         LayoutInflater layoutInflater = LayoutInflater.from(context);
@@ -19,24 +22,26 @@ public class OverlayManager {
         return new OverlayManager(windowManager, overlayView);
     }
 
-    private static View inflateOverlayView(LayoutInflater layoutInflater) {
-        return layoutInflater.inflate(R.layout.layout_overlay, null, false);
-    }
-
-    private final WindowManager windowManager;
-    private final View overlayView;
-
     public OverlayManager(WindowManager windowManager, View overlayView) {
         this.windowManager = windowManager;
         this.overlayView = overlayView;
+    }
+
+    private static View inflateOverlayView(LayoutInflater layoutInflater) {
+        return layoutInflater.inflate(R.layout.layout_overlay, null, false);
     }
 
     public void startOverlay() {
         if (overlayIsAttached()) {
             return;
         }
+
         WindowManager.LayoutParams params = buildOverlayLayoutParams();
         windowManager.addView(overlayView, params);
+    }
+
+    private boolean overlayIsAttached() {
+        return overlayView.getParent() != null;
     }
 
     private WindowManager.LayoutParams buildOverlayLayoutParams() {
@@ -53,10 +58,6 @@ public class OverlayManager {
         layoutParams.gravity = Gravity.CENTER;
 
         return layoutParams;
-    }
-
-    private boolean overlayIsAttached() {
-        return overlayView.getParent() != null;
     }
 
     public void destroy() {

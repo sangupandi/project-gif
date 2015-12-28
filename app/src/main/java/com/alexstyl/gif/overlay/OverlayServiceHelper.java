@@ -19,13 +19,13 @@ public class OverlayServiceHelper {
         return new OverlayServiceHelper(appContext);
     }
 
-    public void disableService() {
-        Intent intent = new Intent(context, OverlayService.class);
-        context.stopService(intent);
-    }
-
     public void enableService() {
         Intent intent = new Intent(context, OverlayService.class);
         context.startService(intent);
+    }
+
+    public void disableService() {
+        Intent intent = new Intent(context, OverlayService.class);
+        context.stopService(intent);
     }
 }

@@ -23,6 +23,12 @@ public class OverlayService extends Service {
         moveToForeground();
     }
 
+    private void moveToForeground() {
+        Notifier notifier = Notifier.newInstance(this);
+        Notification notification = notifier.createNotificationForOverlayService();
+        startForeground(NOTIFICATION_ID, notification);
+    }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         overlayManager.startOverlay();
@@ -35,12 +41,6 @@ public class OverlayService extends Service {
         super.onDestroy();
         overlayManager.destroy();
         IS_RUNNING = false;
-    }
-
-    private void moveToForeground() {
-        Notifier notifier = Notifier.newInstance(this);
-        Notification notification = notifier.createNotificationForOverlayService();
-        startForeground(NOTIFICATION_ID, notification);
     }
 
     @Nullable
