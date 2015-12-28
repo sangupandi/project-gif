@@ -25,9 +25,9 @@ public class DebugActivity extends AppCompatActivity {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         if (isChecked) {
-                            overlayEnabler.disableService();
-                        } else {
                             overlayEnabler.enableService();
+                        } else {
+                            overlayEnabler.disableService();
                         }
                     }
                 }
