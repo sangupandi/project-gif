@@ -8,15 +8,29 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.alexstyl.gif.R;
+import com.alexstyl.gif.util.CombinationTouchListener;
 
 public class OverlayManager {
 
     public static OverlayManager newInstance(Context context) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View overlayView = inflateOverlayView(layoutInflater);
-
+        View overlayView = createOverlayView(context);
         return new OverlayManager(windowManager, overlayView);
+    }
+
+    private static View createOverlayView(Context context) {
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        View view = inflateOverlayView(layoutInflater);
+        setupTouchListeners(view, context);
+        return view;
+    }
+
+    private static void setupTouchListeners(View view, Context context) {
+        CombinationTouchListener listener = new CombinationTouchListener();
+        listener.addListener(DragVerticallyTouchListener.newInstance(context));
+        listener.addListener(ClipToVerticalEdgesTouchListener.newInstance(context));
+
+        view.setOnTouchListener(listener);
     }
 
     private static View inflateOverlayView(LayoutInflater layoutInflater) {
@@ -50,9 +64,13 @@ public class OverlayManager {
                 PixelFormat.TRANSLUCENT
         );
         layoutParams.windowAnimations = R.style.Overlay;
-        layoutParams.gravity = Gravity.CENTER;
+        layoutParams.gravity = getOverlayGravity();
 
         return layoutParams;
+    }
+
+    private int getOverlayGravity() {
+        return Gravity.TOP | Gravity.LEFT;
     }
 
     private boolean overlayIsAttached() {
