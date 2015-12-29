@@ -12,6 +12,14 @@ import com.alexstyl.gif.util.CombinationTouchListener;
 
 public class OverlayManager {
 
+    private final WindowManager windowManager;
+    private final View overlayView;
+
+    public OverlayManager(WindowManager windowManager, View overlayView) {
+        this.windowManager = windowManager;
+        this.overlayView = overlayView;
+    }
+
     public static OverlayManager newInstance(Context context) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         View overlayView = createOverlayView(context);
@@ -35,14 +43,6 @@ public class OverlayManager {
 
     private static View inflateOverlayView(LayoutInflater layoutInflater) {
         return layoutInflater.inflate(R.layout.layout_overlay, null, false);
-    }
-
-    private final WindowManager windowManager;
-    private final View overlayView;
-
-    public OverlayManager(WindowManager windowManager, View overlayView) {
-        this.windowManager = windowManager;
-        this.overlayView = overlayView;
     }
 
     public void startOverlay() {
@@ -70,7 +70,7 @@ public class OverlayManager {
     }
 
     private int getOverlayGravity() {
-        return Gravity.TOP | Gravity.LEFT;
+        return Gravity.TOP | Gravity.RIGHT;
     }
 
     private boolean overlayIsAttached() {

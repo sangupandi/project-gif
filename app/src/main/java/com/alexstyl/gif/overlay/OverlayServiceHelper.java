@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 public class OverlayServiceHelper {
+
     private final Context context;
 
     private OverlayServiceHelper() {

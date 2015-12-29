@@ -7,7 +7,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.alexstyl.gif.util.Log;
 import com.alexstyl.gif.util.Utils;
 
 public class ClipToVerticalEdgesTouchListener implements View.OnTouchListener {
@@ -45,10 +44,8 @@ public class ClipToVerticalEdgesTouchListener implements View.OnTouchListener {
 
             if (isClippingTop(layoutParams, viewHeight)) {
                 layoutParams.y = 0;
-                Log.d("Clipping Top");
             } else if (isClippingBottom(layoutParams, viewHeight)) {
                 layoutParams.y = bottomBoundary - viewHeight;
-                Log.d("Clipping Bottom");
             }
 
             view.setLayoutParams(layoutParams);
