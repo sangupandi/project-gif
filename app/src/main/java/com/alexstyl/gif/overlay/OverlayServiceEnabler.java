@@ -3,20 +3,16 @@ package com.alexstyl.gif.overlay;
 import android.content.Context;
 import android.content.Intent;
 
-public class OverlayServiceHelper {
+public class OverlayServiceEnabler {
     private final Context context;
 
-    private OverlayServiceHelper() {
-        context = null;
-    }
-
-    private OverlayServiceHelper(Context context) {
+    private OverlayServiceEnabler(Context context) {
         this.context = context;
     }
 
-    public static OverlayServiceHelper newInstance(Context context) {
+    public static OverlayServiceEnabler newInstance(Context context) {
         Context appContext = context.getApplicationContext();
-        return new OverlayServiceHelper(appContext);
+        return new OverlayServiceEnabler(appContext);
     }
 
     public void enableService() {

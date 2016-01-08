@@ -7,18 +7,18 @@ import android.widget.CompoundButton;
 
 import com.alexstyl.gif.R;
 import com.alexstyl.gif.overlay.OverlayService;
-import com.alexstyl.gif.overlay.OverlayServiceHelper;
+import com.alexstyl.gif.overlay.OverlayServiceEnabler;
 
 public class DebugActivity extends AppCompatActivity {
 
-    private OverlayServiceHelper overlayServiceHelper;
+    private OverlayServiceEnabler overlayServiceEnabler;
     private SwitchCompat enableSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debug);
-        overlayServiceHelper = OverlayServiceHelper.newInstance(this);
+        overlayServiceEnabler = OverlayServiceEnabler.newInstance(this);
         enableSwitch = (SwitchCompat) findViewById(R.id.checkbox_enable);
         setupEnableSwitch();
     }
@@ -40,9 +40,9 @@ public class DebugActivity extends AppCompatActivity {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         if (isChecked) {
-                            overlayServiceHelper.enableService();
+                            overlayServiceEnabler.enableService();
                         } else {
-                            overlayServiceHelper.disableService();
+                            overlayServiceEnabler.disableService();
                         }
                     }
                 }
