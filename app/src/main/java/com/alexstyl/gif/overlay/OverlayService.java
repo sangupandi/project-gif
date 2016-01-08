@@ -10,7 +10,7 @@ import com.alexstyl.gif.Notifier;
 
 public class OverlayService extends Service {
 
-    private OverlayManager overlayManager;
+    private OverlayDisplayer overlayDisplayer;
 
     private static final int NOTIFICATION_ID = 1;
 
@@ -19,7 +19,7 @@ public class OverlayService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        overlayManager = OverlayManager.newInstance(this);
+        overlayDisplayer = OverlayDisplayer.newInstance(this);
         moveToForeground();
     }
 
@@ -31,7 +31,7 @@ public class OverlayService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        overlayManager.startOverlay();
+        overlayDisplayer.showOverlay();
         IS_RUNNING = true;
         return START_STICKY_COMPATIBILITY;
     }
@@ -39,7 +39,7 @@ public class OverlayService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        overlayManager.destroy();
+        overlayDisplayer.destroy();
         IS_RUNNING = false;
     }
 

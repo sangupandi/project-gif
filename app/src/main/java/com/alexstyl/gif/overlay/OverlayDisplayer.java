@@ -9,29 +9,24 @@ import android.view.WindowManager;
 
 import com.alexstyl.gif.R;
 
-public class OverlayManager {
+public class OverlayDisplayer {
 
     private final WindowManager windowManager;
     private final View overlayView;
 
-    public static OverlayManager newInstance(Context context) {
+    public static OverlayDisplayer newInstance(Context context) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View overlayView = inflateOverlayView(layoutInflater);
+        View overlayView = LayoutInflater.from(context).inflate(R.layout.layout_overlay, null, false);
 
-        return new OverlayManager(windowManager, overlayView);
+        return new OverlayDisplayer(windowManager, overlayView);
     }
 
-    public OverlayManager(WindowManager windowManager, View overlayView) {
+    OverlayDisplayer(WindowManager windowManager, View overlayView) {
         this.windowManager = windowManager;
         this.overlayView = overlayView;
     }
 
-    private static View inflateOverlayView(LayoutInflater layoutInflater) {
-        return layoutInflater.inflate(R.layout.layout_overlay, null, false);
-    }
-
-    public void startOverlay() {
+    public void showOverlay() {
         if (overlayIsAttached()) {
             return;
         }
