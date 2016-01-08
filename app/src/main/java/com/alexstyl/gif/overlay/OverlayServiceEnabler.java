@@ -6,13 +6,13 @@ import android.content.Intent;
 public class OverlayServiceEnabler {
     private final Context context;
 
-    private OverlayServiceEnabler(Context context) {
-        this.context = context;
-    }
-
     public static OverlayServiceEnabler newInstance(Context context) {
         Context appContext = context.getApplicationContext();
         return new OverlayServiceEnabler(appContext);
+    }
+
+    private OverlayServiceEnabler(Context context) {
+        this.context = context;
     }
 
     public void enableService() {
