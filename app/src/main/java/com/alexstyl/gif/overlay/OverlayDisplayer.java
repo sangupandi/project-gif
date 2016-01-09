@@ -10,27 +10,16 @@ import android.view.WindowManager;
 import com.alexstyl.gif.R;
 import com.alexstyl.gif.util.CombinationTouchListener;
 
-public class OverlayManager {
+public class OverlayDisplayer {
 
     private final WindowManager windowManager;
     private final View overlayView;
 
-    public OverlayManager(WindowManager windowManager, View overlayView) {
-        this.windowManager = windowManager;
-        this.overlayView = overlayView;
-    }
-
-    public static OverlayManager newInstance(Context context) {
+    public static OverlayDisplayer newInstance(Context context) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        View overlayView = createOverlayView(context);
-        return new OverlayManager(windowManager, overlayView);
-    }
-
-    private static View createOverlayView(Context context) {
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View view = inflateOverlayView(layoutInflater);
-        setupTouchListeners(view, context);
-        return view;
+        View overlayView = LayoutInflater.from(context).inflate(R.layout.layout_overlay, null, false);
+        setupTouchListeners(overlayView, context);
+        return new OverlayDisplayer(windowManager, overlayView);
     }
 
     private static void setupTouchListeners(View view, Context context) {
@@ -41,16 +30,22 @@ public class OverlayManager {
         view.setOnTouchListener(listener);
     }
 
-    private static View inflateOverlayView(LayoutInflater layoutInflater) {
-        return layoutInflater.inflate(R.layout.layout_overlay, null, false);
+    OverlayDisplayer(WindowManager windowManager, View overlayView) {
+        this.windowManager = windowManager;
+        this.overlayView = overlayView;
     }
 
-    public void startOverlay() {
+    public void showOverlay() {
         if (overlayIsAttached()) {
             return;
         }
+
         WindowManager.LayoutParams params = buildOverlayLayoutParams();
         windowManager.addView(overlayView, params);
+    }
+
+    private boolean overlayIsAttached() {
+        return overlayView.getParent() != null;
     }
 
     private WindowManager.LayoutParams buildOverlayLayoutParams() {
@@ -71,10 +66,6 @@ public class OverlayManager {
 
     private int getOverlayGravity() {
         return Gravity.TOP | Gravity.RIGHT;
-    }
-
-    private boolean overlayIsAttached() {
-        return overlayView.getParent() != null;
     }
 
     public void destroy() {
