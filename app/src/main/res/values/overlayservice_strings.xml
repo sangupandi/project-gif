@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="overlayservice_notification_title">@string/app_is_running_in_the_background</string>
+  <string name="overlayservice_notification_title">@string/app_is_running</string>
   <string name="overlayservice_notification_text">@string/touch_to_do_stuff</string>
 </resources>
