@@ -2,11 +2,13 @@ package com.alexstyl.gif.overlay;
 
 import android.app.Notification;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 import com.alexstyl.gif.Notifier;
+import com.novoda.notils.meta.AndroidUtils;
 
 public class OverlayService extends Service {
 
@@ -14,7 +16,9 @@ public class OverlayService extends Service {
 
     private static final int NOTIFICATION_ID = 1;
 
-    public static boolean IS_RUNNING = false;
+    public static boolean isRunning(Context context) {
+        return AndroidUtils.isServiceRunning(OverlayService.class, context);
+    }
 
     @Override
     public void onCreate() {
@@ -32,7 +36,6 @@ public class OverlayService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         overlayDisplayer.showOverlay();
-        IS_RUNNING = true;
         return START_STICKY_COMPATIBILITY;
     }
 
@@ -40,7 +43,6 @@ public class OverlayService extends Service {
     public void onDestroy() {
         super.onDestroy();
         overlayDisplayer.destroy();
-        IS_RUNNING = false;
     }
 
     @Nullable
