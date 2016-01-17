@@ -7,17 +7,13 @@ import android.support.v4.app.NotificationCompat;
 public class Notifier {
     private final Context context;
 
-    private Notifier() {
-        context = null;
-    }
-
-    public Notifier(Context context) {
-        this.context = context;
-    }
-
     public static Notifier newInstance(Context context) {
         Context appContext = context.getApplicationContext();
         return new Notifier(appContext);
+    }
+
+    Notifier(Context context) {
+        this.context = context;
     }
 
     public Notification createNotificationForOverlayService() {

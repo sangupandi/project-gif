@@ -30,7 +30,7 @@ public class DebugActivity extends AppCompatActivity {
     }
 
     private void updateOverlaySwitch() {
-        boolean isServiceRunning = OverlayService.IS_RUNNING;
+        boolean isServiceRunning = OverlayService.isRunning(this);
         enableSwitch.setChecked(isServiceRunning);
     }
 
