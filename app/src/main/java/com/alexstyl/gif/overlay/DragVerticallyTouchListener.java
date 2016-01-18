@@ -22,20 +22,20 @@ public class DragVerticallyTouchListener implements View.OnTouchListener {
 
     @Override
     final public boolean onTouch(View view, MotionEvent event) {
-        final int Y = (int) event.getRawY();
+        int y = (int) event.getRawY();
 
         WindowManager.LayoutParams lParams = (WindowManager.LayoutParams) view.getLayoutParams();
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                yDelta = Y - lParams.y;
+                yDelta = y - lParams.y;
                 break;
             case MotionEvent.ACTION_POINTER_DOWN:
                 break;
             case MotionEvent.ACTION_POINTER_UP:
                 break;
             case MotionEvent.ACTION_MOVE:
-                lParams.y = Y - yDelta;
+                lParams.y = y - yDelta;
                 view.setLayoutParams(lParams);
                 windowManager.updateViewLayout(view, lParams);
                 break;
