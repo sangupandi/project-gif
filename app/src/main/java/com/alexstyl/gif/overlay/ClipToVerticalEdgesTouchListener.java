@@ -72,23 +72,23 @@ class ClipToVerticalEdgesTouchListener implements View.OnTouchListener {
 
     private void calculateEdges() {
         windowManager.getDefaultDisplay().getSize(screenBoundaries);
-        topBoundary = getStatusBarHeight(resources);
-        bottomBoundary = screenBoundaries.y - getNavigationBarHeight(resources);
+        topBoundary = getStatusBarHeight();
+        bottomBoundary = screenBoundaries.y - getNavigationBarHeight();
     }
 
-    private static int getStatusBarHeight(Resources res) {
+    private int getStatusBarHeight() {
         int result = 0;
-        int resourceId = res.getIdentifier("status_bar_height", "dimen", "android");
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
-            result = res.getDimensionPixelSize(resourceId);
+            result = resources.getDimensionPixelSize(resourceId);
         }
         return result;
     }
 
-    private static int getNavigationBarHeight(Resources res) {
-        int resourceId = res.getIdentifier("navigation_bar_height", "dimen", "android");
+    private int getNavigationBarHeight() {
+        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
         if (resourceId > 0) {
-            return res.getDimensionPixelSize(resourceId);
+            return resources.getDimensionPixelSize(resourceId);
         }
         return 0;
     }
