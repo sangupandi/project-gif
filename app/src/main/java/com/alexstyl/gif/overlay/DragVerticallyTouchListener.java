@@ -7,16 +7,17 @@ import android.view.WindowManager;
 
 public class DragVerticallyTouchListener implements View.OnTouchListener {
 
-    private int yDelta;
     private final WindowManager windowManager;
 
-    private DragVerticallyTouchListener(WindowManager windowManager) {
-        this.windowManager = windowManager;
-    }
+    private int yDelta;
 
     public static DragVerticallyTouchListener newInstance(Context context) {
         WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         return new DragVerticallyTouchListener(manager);
+    }
+
+    private DragVerticallyTouchListener(WindowManager windowManager) {
+        this.windowManager = windowManager;
     }
 
     @Override
