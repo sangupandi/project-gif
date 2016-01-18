@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.alexstyl.gif.R;
-import com.alexstyl.gif.util.CombinationTouchListener;
 
 public class OverlayDisplayer {
 
@@ -23,7 +22,7 @@ public class OverlayDisplayer {
     }
 
     private static void setupTouchListeners(View view, Context context) {
-        CombinationTouchListener listener = new CombinationTouchListener();
+        TouchListenerCollection listener = new TouchListenerCollection();
         listener.addListener(DragVerticallyTouchListener.newInstance(context));
         listener.addListener(ClipToVerticalEdgesTouchListener.newInstance(context));
 

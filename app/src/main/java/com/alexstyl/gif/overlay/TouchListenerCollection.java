@@ -1,11 +1,11 @@
-package com.alexstyl.gif.util;
+package com.alexstyl.gif.overlay;
 
 import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.HashSet;
 
-final public class CombinationTouchListener implements View.OnTouchListener {
+final class TouchListenerCollection implements View.OnTouchListener {
 
     private final HashSet<View.OnTouchListener> listeners = new HashSet<>(1);
 
@@ -20,11 +20,11 @@ final public class CombinationTouchListener implements View.OnTouchListener {
         return false;
     }
 
-    public void addListener(View.OnTouchListener listener) {
+    void addListener(View.OnTouchListener listener) {
         this.listeners.add(listener);
     }
 
-    public void removeListener(View.OnTouchListener listener) {
+    void removeListener(View.OnTouchListener listener) {
         this.listeners.remove(listener);
     }
 
