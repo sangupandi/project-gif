@@ -9,7 +9,7 @@ import android.view.WindowManager;
 
 import com.alexstyl.gif.util.Utils;
 
-public class ClipToVerticalEdgesTouchListener implements View.OnTouchListener {
+class ClipToVerticalEdgesTouchListener implements View.OnTouchListener {
 
     private final OrientationChangedChecker orientationChangedChecker;
     private final WindowManager windowManager;
@@ -26,7 +26,7 @@ public class ClipToVerticalEdgesTouchListener implements View.OnTouchListener {
         return new ClipToVerticalEdgesTouchListener(checker, windowManager, resources);
     }
 
-    public ClipToVerticalEdgesTouchListener(OrientationChangedChecker orientationChangedChecker, WindowManager windowManager, Resources resources) {
+    ClipToVerticalEdgesTouchListener(OrientationChangedChecker orientationChangedChecker, WindowManager windowManager, Resources resources) {
         this.orientationChangedChecker = orientationChangedChecker;
         this.windowManager = windowManager;
         this.resources = resources;
