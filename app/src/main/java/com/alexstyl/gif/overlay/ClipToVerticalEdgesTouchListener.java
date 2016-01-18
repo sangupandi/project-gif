@@ -7,8 +7,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.alexstyl.gif.util.Utils;
-
 class ClipToVerticalEdgesTouchListener implements View.OnTouchListener {
 
     private final OrientationChangedChecker orientationChangedChecker;
@@ -74,7 +72,24 @@ class ClipToVerticalEdgesTouchListener implements View.OnTouchListener {
 
     private void calculateEdges() {
         windowManager.getDefaultDisplay().getSize(screenBoundaries);
-        topBoundary = Utils.getStatusBarHeight(resources);
-        bottomBoundary = screenBoundaries.y - Utils.getNavigationBarHeight(resources);
+        topBoundary = getStatusBarHeight(resources);
+        bottomBoundary = screenBoundaries.y - getNavigationBarHeight(resources);
+    }
+
+    private static int getStatusBarHeight(Resources res) {
+        int result = 0;
+        int resourceId = res.getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = res.getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
+    private static int getNavigationBarHeight(Resources res) {
+        int resourceId = res.getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            return res.getDimensionPixelSize(resourceId);
+        }
+        return 0;
     }
 }
