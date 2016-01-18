@@ -16,7 +16,7 @@ class ClipToVerticalEdgesTouchListener implements View.OnTouchListener {
     private int topBoundary;
     private int bottomBoundary;
 
-    public static ClipToVerticalEdgesTouchListener newInstance(Context context) {
+    static ClipToVerticalEdgesTouchListener newInstance(Context context) {
         OrientationChangedChecker checker = OrientationChangedChecker.newInstance(context);
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Resources resources = context.getResources();
