@@ -5,19 +5,21 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 
-public class DragVerticallyTouchListener implements View.OnTouchListener {
+class DragVerticallyTouchListener implements View.OnTouchListener {
 
-    private final WindowManager windowManager;
+    private final ViewPositionUpdater positionUpdater;
 
     private int yDelta;
 
-    public static DragVerticallyTouchListener newInstance(Context context) {
-        WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        return new DragVerticallyTouchListener(manager);
+    static DragVerticallyTouchListener newInstance(Context context) {
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        ViewPositionUpdater positionUpdater = new ViewPositionUpdater(windowManager);
+
+        return new DragVerticallyTouchListener(positionUpdater);
     }
 
-    private DragVerticallyTouchListener(WindowManager windowManager) {
-        this.windowManager = windowManager;
+    DragVerticallyTouchListener(ViewPositionUpdater positionUpdater) {
+        this.positionUpdater = positionUpdater;
     }
 
     @Override
@@ -30,14 +32,10 @@ public class DragVerticallyTouchListener implements View.OnTouchListener {
             case MotionEvent.ACTION_DOWN:
                 yDelta = y - lParams.y;
                 break;
-            case MotionEvent.ACTION_POINTER_DOWN:
-                break;
-            case MotionEvent.ACTION_POINTER_UP:
-                break;
+
             case MotionEvent.ACTION_MOVE:
                 lParams.y = y - yDelta;
-                view.setLayoutParams(lParams);
-                windowManager.updateViewLayout(view, lParams);
+                positionUpdater.moveViewToPosition(view, y - yDelta);
                 break;
         }
 
