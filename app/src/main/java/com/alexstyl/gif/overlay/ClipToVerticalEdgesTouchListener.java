@@ -9,10 +9,12 @@ import android.view.WindowManager;
 
 class ClipToVerticalEdgesTouchListener implements View.OnTouchListener {
 
+    private final Point screenBoundaries = new Point();
+
     private final OrientationChangedChecker orientationChangedChecker;
     private final WindowManager windowManager;
     private final Resources resources;
-    private final Point screenBoundaries = new Point();
+
     private int topBoundary;
     private int bottomBoundary;
 
