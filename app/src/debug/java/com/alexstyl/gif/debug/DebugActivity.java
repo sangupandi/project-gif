@@ -1,6 +1,5 @@
 package com.alexstyl.gif.debug;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -52,7 +51,7 @@ public class DebugActivity extends AppCompatActivity implements ActivityCompat.O
     }
 
     private boolean needsToAskForPermission() {
-        return Build.VERSION_CODES.M >= Build.VERSION.SDK_INT;
+        return permissionChecker.needsToAskForPermissions();
     }
 
     private void setupEnableSwitch() {
