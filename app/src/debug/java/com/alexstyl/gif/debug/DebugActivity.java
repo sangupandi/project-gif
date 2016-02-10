@@ -61,21 +61,13 @@ public class DebugActivity extends AppCompatActivity implements ActivityCompat.O
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         if (isChecked) {
-                            enableServiceOrAskForPermission();
+                            overlayServiceEnabler.enableService();
                         } else {
                             overlayServiceEnabler.disableService();
                         }
                     }
                 }
         );
-    }
-
-    private void enableServiceOrAskForPermission() {
-        if (permissionChecker.hasOverlayPermission()) {
-            overlayServiceEnabler.enableService();
-        } else {
-            permissionChecker.requestForOverlayPermission(this);
-        }
     }
 
     @Override
@@ -88,6 +80,7 @@ public class DebugActivity extends AppCompatActivity implements ActivityCompat.O
     private void updateOverlaySwitch() {
         boolean isServiceRunning = OverlayService.isRunning(this);
         enableSwitch.setChecked(isServiceRunning);
+        enableSwitch.setEnabled(permissionChecker.hasOverlayPermission());
     }
 
     private void updatePermissionLayoutLabel() {
