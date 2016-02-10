@@ -12,8 +12,7 @@ class DragVerticallyTouchListener implements View.OnTouchListener {
     private int yDelta;
 
     static DragVerticallyTouchListener newInstance(Context context) {
-        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        ViewPositionUpdater positionUpdater = new ViewPositionUpdater(windowManager);
+        ViewPositionUpdater positionUpdater = ViewPositionUpdater.newInstance(context);
 
         return new DragVerticallyTouchListener(positionUpdater);
     }
@@ -34,8 +33,7 @@ class DragVerticallyTouchListener implements View.OnTouchListener {
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                lParams.y = y - yDelta;
-                positionUpdater.moveViewToPosition(view, y - yDelta);
+                positionUpdater.moveViewToYPosition(view, y - yDelta);
                 break;
         }
 

@@ -22,11 +22,7 @@ public class OverlayDisplayer {
     }
 
     private static void setupTouchListeners(View view, Context context) {
-        TouchListenerCollection listener = new TouchListenerCollection();
-        listener.addListener(DragVerticallyTouchListener.newInstance(context));
-        listener.addListener(ClipToVerticalEdgesTouchListener.newInstance(context));
-
-        view.setOnTouchListener(listener);
+        view.setOnTouchListener(DragVerticallyTouchListener.newInstance(context));
     }
 
     OverlayDisplayer(WindowManager windowManager, View overlayView) {
