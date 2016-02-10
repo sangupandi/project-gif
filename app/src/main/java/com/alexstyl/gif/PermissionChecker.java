@@ -21,7 +21,7 @@ public class PermissionChecker {
         this.context = context;
     }
 
-    private boolean needsToAskForPermissions() {
+    public boolean needsToAskForPermissions() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
     }
 
