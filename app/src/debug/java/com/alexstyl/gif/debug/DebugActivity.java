@@ -36,6 +36,21 @@ public class DebugActivity extends AppCompatActivity implements ActivityCompat.O
         setupPermissionStatus();
     }
 
+    private void setupEnableSwitch() {
+        enableSwitch.setOnCheckedChangeListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked) {
+                            overlayServiceEnabler.enableService();
+                        } else {
+                            overlayServiceEnabler.disableService();
+                        }
+                    }
+                }
+        );
+    }
+
     private void setupPermissionStatus() {
         if (needsToAskForPermission()) {
             permissionStatusLayout.setVisibility(View.VISIBLE);
@@ -52,21 +67,6 @@ public class DebugActivity extends AppCompatActivity implements ActivityCompat.O
 
     private boolean needsToAskForPermission() {
         return permissionChecker.needsToAskForPermissions();
-    }
-
-    private void setupEnableSwitch() {
-        enableSwitch.setOnCheckedChangeListener(
-                new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (isChecked) {
-                            overlayServiceEnabler.enableService();
-                        } else {
-                            overlayServiceEnabler.disableService();
-                        }
-                    }
-                }
-        );
     }
 
     @Override
