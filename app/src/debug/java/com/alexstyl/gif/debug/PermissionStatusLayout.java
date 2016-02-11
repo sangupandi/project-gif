@@ -3,7 +3,6 @@ package com.alexstyl.gif.debug;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,11 +27,6 @@ public class PermissionStatusLayout extends LinearLayout {
         inflate(getContext(), R.layout.merge_permission_status_layout, this);
         headerView = Views.findById(this, R.id.debug_permission_status_header);
         subtitleView = Views.findById(this, R.id.debug_permission_status_subtitle);
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
     }
 
     public void displayPermissionGranted() {
