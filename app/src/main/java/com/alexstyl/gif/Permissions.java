@@ -9,15 +9,16 @@ import android.provider.Settings;
 
 import com.novoda.notils.exception.DeveloperError;
 
-public class PermissionChecker {
+public class Permissions {
+
     private final Context context;
 
-    public static PermissionChecker newInstance(Context context) {
+    public static Permissions newInstance(Context context) {
         Context appContext = context.getApplicationContext();
-        return new PermissionChecker(appContext);
+        return new Permissions(appContext);
     }
 
-    PermissionChecker(Context context) {
+    Permissions(Context context) {
         this.context = context;
     }
 
@@ -42,6 +43,6 @@ public class PermissionChecker {
         } else {
             throw new DeveloperError("No need to ask for permissions prior to Android 6.0 (M)");
         }
-
     }
+
 }

@@ -7,7 +7,7 @@ import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.widget.CompoundButton;
 
-import com.alexstyl.gif.PermissionChecker;
+import com.alexstyl.gif.Permissions;
 import com.alexstyl.gif.R;
 import com.alexstyl.gif.overlay.OverlayService;
 import com.alexstyl.gif.overlay.OverlayServiceEnabler;
@@ -19,7 +19,7 @@ public class DebugActivity extends AppCompatActivity implements ActivityCompat.O
     private PermissionStatusLayout permissionStatusLayout;
 
     private OverlayServiceEnabler overlayServiceEnabler;
-    private PermissionChecker permissionChecker;
+    private Permissions permissions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class DebugActivity extends AppCompatActivity implements ActivityCompat.O
         setContentView(R.layout.activity_debug);
 
         overlayServiceEnabler = OverlayServiceEnabler.newInstance(this);
-        permissionChecker = PermissionChecker.newInstance(this);
+        permissions = Permissions.newInstance(this);
 
         enableSwitch = Views.findById(this, R.id.checkbox_enable);
         permissionStatusLayout = Views.findById(this, R.id.debug_permission_status_layout);
@@ -57,7 +57,7 @@ public class DebugActivity extends AppCompatActivity implements ActivityCompat.O
             permissionStatusLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    permissionChecker.requestForOverlayPermission(DebugActivity.this);
+                    permissions.requestForOverlayPermission(DebugActivity.this);
                 }
             });
         } else {
@@ -66,7 +66,7 @@ public class DebugActivity extends AppCompatActivity implements ActivityCompat.O
     }
 
     private boolean needsToAskForPermission() {
-        return permissionChecker.needsToAskForPermissions();
+        return permissions.needsToAskForPermissions();
     }
 
     @Override
@@ -79,11 +79,11 @@ public class DebugActivity extends AppCompatActivity implements ActivityCompat.O
     private void updateOverlaySwitch() {
         boolean isServiceRunning = OverlayService.isRunning(this);
         enableSwitch.setChecked(isServiceRunning);
-        enableSwitch.setEnabled(permissionChecker.hasOverlayPermission());
+        enableSwitch.setEnabled(permissions.hasOverlayPermission());
     }
 
     private void updatePermissionLayoutLabel() {
-        if (permissionChecker.hasOverlayPermission()) {
+        if (permissions.hasOverlayPermission()) {
             permissionStatusLayout.displayPermissionGranted();
         } else {
             permissionStatusLayout.displayPermissionRequired();
