@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="debug_label">Project-Gif Debug</string>
+
+  <string name="debug_permission_granted">Permission granted</string>
+  <string name="debug_permission_required">Requiring permission</string>
+  <string name="debug_permission_touch_to_grant">Touch to grant permission</string>
+  <string name="debug_permission_touch_to_revoke">Touch to revoke permission</string>
 </resources>

@@ -2,15 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:orientation="vertical"
-  android:paddingLeft="@dimen/activity_horizontal_margin"
-  android:paddingRight="@dimen/activity_horizontal_margin">
+  android:orientation="vertical">
+
+
+  <com.alexstyl.gif.debug.PermissionStatusLayout
+    android:id="@+id/debug_permission_status_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/activity_horizontal_margin"
+    android:background="@color/colorPrimaryDark"
+    android:minHeight="@dimen/touch_friendly_height" />
+
 
   <android.support.v7.widget.SwitchCompat
     android:id="@+id/checkbox_enable"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="@dimen/touch_friendly_height"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
     android:text="@string/debug_overlay_enable" />
 
 
