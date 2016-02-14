@@ -10,13 +10,13 @@ class OrientationChangedChecker {
     private final Configuration configuration;
     private int previousOrientation = UNDEFINED;
 
-    OrientationChangedChecker(Configuration configuration) {
-        this.configuration = configuration;
-    }
-
     static OrientationChangedChecker newInstance(Context context) {
         Configuration configuration = context.getResources().getConfiguration();
         return new OrientationChangedChecker(configuration);
+    }
+
+    OrientationChangedChecker(Configuration configuration) {
+        this.configuration = configuration;
     }
 
     boolean orientationChanged() {
