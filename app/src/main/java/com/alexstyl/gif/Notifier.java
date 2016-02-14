@@ -1,5 +1,6 @@
 package com.alexstyl.gif;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.content.Context;
 import android.support.v4.app.NotificationCompat;
@@ -16,6 +17,9 @@ public class Notifier {
         this.context = context;
     }
 
+    @SuppressLint("StringFormatInvalid")
+    // the contentTitle is linking to a string with no arguments and Lint is complaining.
+    // In fact, that string links to a strings that actually links to a string with arguments
     public Notification createNotificationForOverlayService() {
         String appName = context.getString(R.string.app_name);
         CharSequence contentTitle = context.getString(R.string.overlayservice_notification_title, appName);
