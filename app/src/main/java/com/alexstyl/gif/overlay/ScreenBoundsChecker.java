@@ -1,67 +1,35 @@
 package com.alexstyl.gif.overlay;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Point;
-import android.view.WindowManager;
 
 public class ScreenBoundsChecker {
 
-    private final WindowManager windowManager;
-    private final Resources resources;
+    private final Context context;
+    private ScreenBounds screenBounds;
 
-    private int topBoundary;
-    private int bottomBoundary;
-
-    ScreenBoundsChecker(WindowManager windowManager, Resources resources) {
-        this.windowManager = windowManager;
-        this.resources = resources;
+    public ScreenBoundsChecker(ScreenBounds screenBounds, Context appContext) {
+        this.screenBounds = screenBounds;
+        this.context = appContext;
     }
 
-    public static ScreenBoundsChecker newInstance(Context context) {
-        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Resources resources = context.getResources();
-        return new ScreenBoundsChecker(windowManager, resources);
+    void recalculateBoundaries() {
+        this.screenBounds = ScreenBounds.getAvailableScreenBounds(context);
     }
 
-    void calculateEdges() {
-        Point screenBoundaries = new Point();
-        windowManager.getDefaultDisplay().getSize(screenBoundaries);
-
-        topBoundary = 0;//getStatusBarHeight();
-        bottomBoundary = screenBoundaries.y; // - getNavigationBarHeight();
+    boolean isPositionOutsideTop(int yPosition) {
+        return yPosition < screenBounds.top;
     }
 
-    public boolean isPositionOutsideTop(int yPosition) {
-        return yPosition < topBoundary;
+    boolean isPositionOutsideBottom(int yPosition) {
+        return yPosition > screenBounds.bottom;
     }
 
-    public boolean isPositionOutsideBottom(int yPosition) {
-        return yPosition > bottomBoundary;
+    int getTopBound() {
+        return screenBounds.top;
     }
 
-    public int getTopBound() {
-        return topBoundary;
+    int getBottomBound() {
+        return screenBounds.bottom;
     }
 
-    public int getBottomBound() {
-        return bottomBoundary;
-    }
-
-//    private int getStatusBarHeight() {
-//        int result = 0;
-//        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
-//        if (resourceId > 0) {
-//            result = resources.getDimensionPixelSize(resourceId);
-//        }
-//        return result;
-//    }
-//
-//    private int getNavigationBarHeight() {
-//        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
-//        if (resourceId > 0) {
-//            return resources.getDimensionPixelSize(resourceId);
-//        }
-//        return 0;
-//    }
 }

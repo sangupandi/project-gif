@@ -6,19 +6,19 @@ import android.view.WindowManager;
 
 class ViewPositionUpdater {
 
-    private final WindowManager windowManager;
-    private final ScreenBoundsChecker boundsChecker;
     private final OrientationChangedChecker orientationChangedChecker;
+    private final ScreenBoundsChecker boundsChecker;
+    private final WindowManager windowManager;
 
-    public static ViewPositionUpdater newInstance(Context context) {
-        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        ScreenBoundsChecker boundsChecker = ScreenBoundsChecker.newInstance(context);
+    static ViewPositionUpdater newInstance(Context context) {
         OrientationChangedChecker orientationChangedChecker = OrientationChangedChecker.newInstance(context);
+        ScreenBoundsChecker boundsChecker = new ScreenBoundsChecker(ScreenBounds.getAvailableScreenBounds(context), context.getApplicationContext());
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
-        return new ViewPositionUpdater(windowManager, boundsChecker, orientationChangedChecker);
+        return new ViewPositionUpdater(orientationChangedChecker, boundsChecker, windowManager);
     }
 
-    ViewPositionUpdater(WindowManager windowManager, ScreenBoundsChecker boundsChecker, OrientationChangedChecker orientationChangedChecker) {
+    ViewPositionUpdater(OrientationChangedChecker orientationChangedChecker, ScreenBoundsChecker boundsChecker, WindowManager windowManager) {
         this.windowManager = windowManager;
         this.boundsChecker = boundsChecker;
         this.orientationChangedChecker = orientationChangedChecker;
@@ -26,16 +26,17 @@ class ViewPositionUpdater {
 
     void moveViewToYPosition(View view, int yPosition) {
         if (orientationChangedChecker.orientationChanged()) {
-            boundsChecker.calculateEdges();
+            boundsChecker.recalculateBoundaries();
         }
 
         WindowManager.LayoutParams layoutParams = (WindowManager.LayoutParams) view.getLayoutParams();
-        layoutParams.y = yPosition;
 
         if (boundsChecker.isPositionOutsideTop(yPosition)) {
             layoutParams.y = boundsChecker.getTopBound();
-        } else if (boundsChecker.isPositionOutsideBottom(layoutParams.y + view.getHeight())) {
-            layoutParams.y = boundsChecker.getBottomBound() + view.getHeight();
+        } else if (boundsChecker.isPositionOutsideBottom(yPosition + view.getHeight())) {
+            layoutParams.y = boundsChecker.getBottomBound() - view.getHeight();
+        } else {
+            layoutParams.y = yPosition;
         }
 
         windowManager.updateViewLayout(view, layoutParams);
