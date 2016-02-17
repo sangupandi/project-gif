@@ -33,7 +33,7 @@ class DragVerticallyTouchListener implements View.OnTouchListener {
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                positionUpdater.moveViewToYPosition(view, y - yDelta);
+                positionUpdater.moveViewVertically(view, y - yDelta);
                 break;
         }
 

@@ -24,10 +24,25 @@ class ViewPositionUpdater {
         this.orientationChangedChecker = orientationChangedChecker;
     }
 
-    void moveViewToYPosition(View view, int yPosition) {
-        if (orientationChangedChecker.orientationChanged()) {
-            boundsChecker.recalculateBoundaries();
+    void moveViewHorizontally(View view, int xPosition) {
+        checkForOrientationChange();
+
+        WindowManager.LayoutParams layoutParams = (WindowManager.LayoutParams) view.getLayoutParams();
+
+        if (boundsChecker.isPositionOutsideLeft(xPosition)) {
+            layoutParams.x = boundsChecker.getLeftBound();
+        } else if (boundsChecker.isPositionOutsideRight(xPosition + view.getWidth())) {
+            layoutParams.x = boundsChecker.getRightBound() - view.getWidth();
+        } else {
+            layoutParams.x = xPosition;
         }
+
+        windowManager.updateViewLayout(view, layoutParams);
+        view.setLayoutParams(layoutParams);
+    }
+
+    void moveViewVertically(View view, int yPosition) {
+        checkForOrientationChange();
 
         WindowManager.LayoutParams layoutParams = (WindowManager.LayoutParams) view.getLayoutParams();
 
@@ -42,4 +57,12 @@ class ViewPositionUpdater {
         windowManager.updateViewLayout(view, layoutParams);
         view.setLayoutParams(layoutParams);
     }
+
+    private void checkForOrientationChange() {
+        if (orientationChangedChecker.orientationChanged()) {
+            boundsChecker.recalculateBoundaries();
+        }
+    }
+
+
 }

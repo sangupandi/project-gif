@@ -16,8 +16,16 @@ public class ScreenBoundsChecker {
         this.screenBounds = ScreenBounds.getAvailableScreenBounds(context);
     }
 
+    public boolean isPositionOutsideLeft(int xPosition) {
+        return xPosition < screenBounds.left;
+    }
+
     boolean isPositionOutsideTop(int yPosition) {
         return yPosition < screenBounds.top;
+    }
+
+    public boolean isPositionOutsideRight(int xPosition) {
+        return xPosition > screenBounds.right;
     }
 
     boolean isPositionOutsideBottom(int yPosition) {
@@ -32,4 +40,11 @@ public class ScreenBoundsChecker {
         return screenBounds.bottom;
     }
 
+    public int getLeftBound() {
+        return screenBounds.left;
+    }
+
+    public int getRightBound() {
+        return screenBounds.right;
+    }
 }

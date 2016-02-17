@@ -7,8 +7,7 @@ import android.view.WindowManager;
 
 public class ScreenBounds {
 
-    final int top;
-    final int bottom;
+    final int left, top, right, bottom;
 
     public static ScreenBounds getAvailableScreenBounds(Context context) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -18,12 +17,13 @@ public class ScreenBounds {
         int statusBarHeight = getStatusBarHeight(context.getResources());
         int availableHeight = screenSize.y - statusBarHeight;
 
-        return new ScreenBounds(0, availableHeight);
+        return new ScreenBounds(0, 0, screenSize.x, availableHeight);
     }
 
-
-    public ScreenBounds(int top, int bottom) {
+    public ScreenBounds(int left, int top, int right, int bottom) {
+        this.left = left;
         this.top = top;
+        this.right = right;
         this.bottom = bottom;
     }
 
