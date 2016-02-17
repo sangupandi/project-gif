@@ -3,7 +3,6 @@ package com.alexstyl.gif.overlay;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -16,13 +15,9 @@ public class OverlayDisplayer {
 
     public static OverlayDisplayer newInstance(Context context) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        View overlayView = LayoutInflater.from(context).inflate(R.layout.layout_overlay, null, false);
-        setupTouchListeners(overlayView, context);
+        OverlayView overlayView = new OverlayView(context);
+        overlayView.setOnTouchListener(DragHorizontallyTouchListener.newInstance(context));
         return new OverlayDisplayer(windowManager, overlayView);
-    }
-
-    private static void setupTouchListeners(View view, Context context) {
-        view.setOnTouchListener(DragVerticallyTouchListener.newInstance(context));
     }
 
     OverlayDisplayer(WindowManager windowManager, View overlayView) {
@@ -60,7 +55,7 @@ public class OverlayDisplayer {
     }
 
     private int getOverlayGravity() {
-        return Gravity.TOP | Gravity.RIGHT;
+        return Gravity.TOP | Gravity.LEFT;
     }
 
     public void destroy() {
