@@ -20,17 +20,17 @@ final class CompositeTouchListener implements View.OnTouchListener {
         return false;
     }
 
-    void addListener(View.OnTouchListener listener) {
+    void addListeners(View.OnTouchListener listener) {
         this.listeners.add(listener);
+    }
+
+    public void addListeners(View.OnTouchListener... listeners) {
+        for (View.OnTouchListener listener : listeners) {
+            this.listeners.add(listener);
+        }
     }
 
     void removeListener(View.OnTouchListener listener) {
         this.listeners.remove(listener);
-    }
-
-    public void addListener(View.OnTouchListener... listeners) {
-        for (View.OnTouchListener listener : listeners) {
-            addListener(listener);
-        }
     }
 }
