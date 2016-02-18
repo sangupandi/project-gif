@@ -4,9 +4,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 
-public class EdgeReachedMonitor implements View.OnTouchListener {
+class EdgeReachedMonitor implements View.OnTouchListener {
 
     private final OnEdgeReachedListener onEdgeReachedListener;
+
     private boolean hasMovedView;
 
     EdgeReachedMonitor(OnEdgeReachedListener onEdgeReachedListener) {

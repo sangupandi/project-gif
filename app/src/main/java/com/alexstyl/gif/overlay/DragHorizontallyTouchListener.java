@@ -5,7 +5,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 
-public class DragHorizontallyTouchListener implements View.OnTouchListener {
+class DragHorizontallyTouchListener implements View.OnTouchListener {
 
     private final ScreenBoundsChecker boundsChecker;
     private final ViewPositionUpdater positionUpdater;
