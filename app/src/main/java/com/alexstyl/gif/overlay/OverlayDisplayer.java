@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.PixelFormat;
 import android.view.Gravity;
-import android.view.View;
 import android.view.WindowManager;
 
 import com.alexstyl.gif.R;
@@ -12,7 +11,7 @@ import com.alexstyl.gif.R;
 public class OverlayDisplayer {
 
     private final WindowManager windowManager;
-    private final View overlayView;
+    private final OverlayView overlayView;
 
     public static OverlayDisplayer newInstance(Context context, OnEdgeReachedListener onEdgeReachedListener) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -35,7 +34,7 @@ public class OverlayDisplayer {
         return overlayView;
     }
 
-    OverlayDisplayer(WindowManager windowManager, View overlayView) {
+    OverlayDisplayer(WindowManager windowManager, OverlayView overlayView) {
         this.windowManager = windowManager;
         this.overlayView = overlayView;
     }
@@ -75,21 +74,22 @@ public class OverlayDisplayer {
         return Gravity.TOP | Gravity.LEFT;
     }
 
-    public void destroy() {
-        windowManager.removeView(overlayView);
-    }
-
     public void moveToInitialPosition() {
         Context context = overlayView.getContext();
+        Resources resources = context.getResources();
         ViewPositionUpdater positionUpdater = ViewPositionUpdater.newInstance(context);
         ScreenBoundsChecker checker = new ScreenBoundsChecker(ScreenBounds.getAvailableScreenBounds(context), context);
 
-        Resources resources = overlayView.getContext().getResources();
         int actionbarHeight = resources.getDimensionPixelSize(android.support.v7.appcompat.R.dimen.abc_action_bar_default_height_material);
-        positionUpdater.moveViewVertically(overlayView, actionbarHeight);
         int overlayWidth = resources.getDimensionPixelOffset(R.dimen.overlay_default_width);
+
+        positionUpdater.moveViewVertically(overlayView, actionbarHeight);
         positionUpdater.moveViewHorizontally(overlayView, checker.getRightBound() - overlayWidth);
 
+    }
+
+    public void destroy() {
+        windowManager.removeView(overlayView);
     }
 
 }
