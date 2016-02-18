@@ -3,6 +3,7 @@ package com.alexstyl.gif.overlay;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.Collections;
 import java.util.HashSet;
 
 final class CompositeTouchListener implements View.OnTouchListener {
@@ -20,17 +21,8 @@ final class CompositeTouchListener implements View.OnTouchListener {
         return false;
     }
 
-    void addListeners(View.OnTouchListener listener) {
-        this.listeners.add(listener);
-    }
-
     public void addListeners(View.OnTouchListener... listeners) {
-        for (View.OnTouchListener listener : listeners) {
-            this.listeners.add(listener);
-        }
+        Collections.addAll(this.listeners, listeners);
     }
 
-    void removeListener(View.OnTouchListener listener) {
-        this.listeners.remove(listener);
-    }
 }
