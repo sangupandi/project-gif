@@ -1,6 +1,7 @@
 package com.alexstyl.gif.overlay;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.PixelFormat;
 import android.view.Gravity;
 import android.view.View;
@@ -13,11 +14,25 @@ public class OverlayDisplayer {
     private final WindowManager windowManager;
     private final View overlayView;
 
-    public static OverlayDisplayer newInstance(Context context) {
+    public static OverlayDisplayer newInstance(Context context, OnEdgeReachedListener onEdgeReachedListener) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        OverlayView overlayView = new OverlayView(context);
-        overlayView.setOnTouchListener(DragHorizontallyTouchListener.newInstance(context));
+        OverlayView overlayView = createOverlayView(context, onEdgeReachedListener);
+
         return new OverlayDisplayer(windowManager, overlayView);
+    }
+
+    private static OverlayView createOverlayView(Context context, OnEdgeReachedListener onEdgeReachedListener) {
+        OverlayView overlayView = new OverlayView(context);
+
+        CompositeTouchListener touchListeners = new CompositeTouchListener();
+        touchListeners.addListener(
+                DragVerticallyTouchListener.newInstance(context),
+                DragHorizontallyTouchListener.newInstance(context),
+                new EdgeReachedMonitor(onEdgeReachedListener)
+        );
+        overlayView.setOnTouchListener(touchListeners);
+
+        return overlayView;
     }
 
     OverlayDisplayer(WindowManager windowManager, View overlayView) {
@@ -63,4 +78,18 @@ public class OverlayDisplayer {
     public void destroy() {
         windowManager.removeView(overlayView);
     }
+
+    public void moveToInitialPosition() {
+        Context context = overlayView.getContext();
+        ViewPositionUpdater positionUpdater = ViewPositionUpdater.newInstance(context);
+        ScreenBoundsChecker checker = new ScreenBoundsChecker(ScreenBounds.getAvailableScreenBounds(context), context);
+
+        Resources resources = overlayView.getContext().getResources();
+        int actionbarHeight = resources.getDimensionPixelSize(android.support.v7.appcompat.R.dimen.abc_action_bar_default_height_material);
+        positionUpdater.moveViewVertically(overlayView, actionbarHeight);
+        int overlayWidth = resources.getDimensionPixelOffset(R.dimen.overlay_default_width);
+        positionUpdater.moveViewHorizontally(overlayView, checker.getRightBound() - overlayWidth);
+
+    }
+
 }

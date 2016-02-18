@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
+import android.view.View;
 
 import com.alexstyl.gif.Notifier;
 import com.novoda.notils.meta.AndroidUtils;
@@ -23,9 +25,16 @@ public class OverlayService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        overlayDisplayer = OverlayDisplayer.newInstance(this);
+        overlayDisplayer = OverlayDisplayer.newInstance(this, onEdgeReachedListener);
         moveToForeground();
     }
+
+    private static OnEdgeReachedListener onEdgeReachedListener = new OnEdgeReachedListener() {
+        @Override
+        public void onViewReachedEdge(View view) {
+            Log.d("lolz", "View reached end. Start new activity");
+        }
+    };
 
     private void moveToForeground() {
         Notifier notifier = Notifier.newInstance(this);
@@ -36,6 +45,8 @@ public class OverlayService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         overlayDisplayer.showOverlay();
+        overlayDisplayer.moveToInitialPosition();
+
         return START_STICKY_COMPATIBILITY;
     }
 

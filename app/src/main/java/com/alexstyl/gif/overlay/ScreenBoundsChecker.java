@@ -7,6 +7,10 @@ public class ScreenBoundsChecker {
     private final Context context;
     private ScreenBounds screenBounds;
 
+    public static ScreenBoundsChecker createCheckerForExistingBounds(Context context) {
+        return new ScreenBoundsChecker(ScreenBounds.getAvailableScreenBounds(context), context);
+    }
+
     public ScreenBoundsChecker(ScreenBounds screenBounds, Context appContext) {
         this.screenBounds = screenBounds;
         this.context = appContext;
