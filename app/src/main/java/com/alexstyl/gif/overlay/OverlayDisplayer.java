@@ -25,7 +25,7 @@ public class OverlayDisplayer {
         OverlayView overlayView = new OverlayView(context);
 
         CompositeTouchListener touchListeners = new CompositeTouchListener();
-        touchListeners.addListener(
+        touchListeners.addListeners(
                 DragVerticallyTouchListener.newInstance(context),
                 DragHorizontallyTouchListener.newInstance(context),
                 new EdgeReachedMonitor(onEdgeReachedListener)
