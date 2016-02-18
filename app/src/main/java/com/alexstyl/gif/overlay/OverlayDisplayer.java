@@ -71,7 +71,7 @@ public class OverlayDisplayer {
 
     private int getOverlayGravity() {
         // we are setting Top + Left in order for the coordinates that we give into our view
-        // have 0,0 the toppest left corder of the screen. This should make the math easier
+        // have 0,0 the top,left corner of the screen. This should make the math easier
         return Gravity.TOP | Gravity.LEFT;
     }
 
