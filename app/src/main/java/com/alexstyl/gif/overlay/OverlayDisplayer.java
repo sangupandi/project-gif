@@ -17,8 +17,12 @@ public class OverlayDisplayer {
     public static OverlayDisplayer newInstance(Context context) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         View overlayView = LayoutInflater.from(context).inflate(R.layout.layout_overlay, null, false);
-
+        setupTouchListeners(overlayView, context);
         return new OverlayDisplayer(windowManager, overlayView);
+    }
+
+    private static void setupTouchListeners(View view, Context context) {
+        view.setOnTouchListener(DragVerticallyTouchListener.newInstance(context));
     }
 
     OverlayDisplayer(WindowManager windowManager, View overlayView) {
@@ -50,9 +54,13 @@ public class OverlayDisplayer {
                 PixelFormat.TRANSLUCENT
         );
         layoutParams.windowAnimations = R.style.Overlay;
-        layoutParams.gravity = Gravity.CENTER;
+        layoutParams.gravity = getOverlayGravity();
 
         return layoutParams;
+    }
+
+    private int getOverlayGravity() {
+        return Gravity.TOP | Gravity.RIGHT;
     }
 
     public void destroy() {
